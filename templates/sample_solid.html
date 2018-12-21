@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Profile Viewer</title>
+  <link rel="stylesheet" href="static/css/main.css">
+</head>
+<body>
+  <h1>Profile viewer</h1>  
+  <p>
+    <label for="profile">Profile:</label>
+    <input id="profile">
+    <button id="view">View</button>
+  </p>
+  <dl id="viewer">
+    <dt>Full name</dt>
+      <dd id="fullName"></dd>    
+    <dt>Friends</dt>
+    <dd id="friends"></dd>
+  </dl>  
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>   
+  <script>     
+      $("document").ready(function () {
+        $("#view").click(async function () {          
+                var profile = $('#profile').val();                
+                console.log(profile);                
+                var callDetails = {
+                        type: 'POST',
+                        url: '/view',                        
+                        data: {'profile' : profile}
+                    };
+                    console.log(callDetails)
+                    $.ajax(callDetails).done(function (view) {                                                                                          
+                        var arrayLength = view.answer.length;                        
+                        var list_element = document.querySelectorAll('#friends > li').length
+                        console.log(document.querySelectorAll('#friends > li'))
+                        if (list_element > 0) {
+                          $("#friends").empty()
+                        }                        
+                        if (arrayLength > 0) {
+                          for (var i = 0; i < arrayLength; i++) {                            
+                            var friends_element = document.getElementById('friends');
+                            var element = document.createElement('li');
+                            friends_element.appendChild(element)
+                            var child_element = document.createElement('a');
+
+                            child_element.text=view.answer[i]
+                            child_element.onclick = function(){document.getElementById('profile').value=this.text}
+                            element.appendChild(child_element);
+                            console.log(child_element);                                     
+                        }};
+                        $("#fullName").text(view.name);
+                                                                
+                    });
+                })
+            })
+        </script>
+
+  </body>
+</html>
+
+
+
