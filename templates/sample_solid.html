@@ -1,64 +1,80 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Profile Viewer</title>
-  <link rel="stylesheet" href="static/css/main.css">
+
+<head>      
+    <title>sample_python_solid_app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Bootstrap -->
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Abel|Open+Sans:400,600" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- sample python solid stylesheet -->
+    <link href="/static/css/main.css" rel="stylesheet">
 </head>
+
 <body>
-  <h1>Profile viewer</h1>  
-  <p>
-    <label for="profile">Profile:</label>
-    <input id="profile">
-    <button id="view">View</button>
-  </p>
-  <dl id="viewer">
-    <dt>Full name</dt>
-      <dd id="fullName"></dd>    
-    <dt>Friends</dt>
-    <dd id="friends"></dd>
-  </dl>  
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>   
-  <script>     
-      $("document").ready(function () {
-        $("#view").click(async function () {          
-                var profile = $('#profile').val();                
-                console.log(profile);                
-                var callDetails = {
-                        type: 'POST',
-                        url: '/view',                        
-                        data: {'profile' : profile}
-                    };
-                    console.log(callDetails)
-                    $.ajax(callDetails).done(function (view) {                                                                                          
-                        var arrayLength = view.answer.length;                        
-                        var list_element = document.querySelectorAll('#friends > li').length
-                        console.log(document.querySelectorAll('#friends > li'))
-                        if (list_element > 0) {
-                          $("#friends").empty()
-                        }                        
-                        if (arrayLength > 0) {
-                          for (var i = 0; i < arrayLength; i++) {                            
-                            var friends_element = document.getElementById('friends');
-                            var element = document.createElement('li');
-                            friends_element.appendChild(element)
-                            var child_element = document.createElement('a');
-
-                            child_element.text=view.answer[i]
-                            child_element.onclick = function(){document.getElementById('profile').value=this.text}
-                            element.appendChild(child_element);
-                            console.log(child_element);                                     
-                        }};
-                        $("#fullName").text(view.name);
-                                                                
-                    });
-                })
-            })
-        </script>
-
-  </body>
-</html>
-
-
-
+    <div class="container toppy">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h1 class="margin-base-vertical text-center">Solid Profile Viewer</h1>
+                <p>
+                    <label for="profile">Profile:</label>
+                    <input id="profile">
+                    <button id="view">View</button>
+                  </p>
+                  <dl id="viewer" class="top-space-20">
+                      <dt>Full name:</dt>
+                        <dd id="fullName"class="col-md-offset-1"></dd>    
+                      <dt>Friends:</dt>
+                      <dd id="friends"></dd>
+                  </dl>                               
+            </div>
+        </div>        
+    </div>  
+    <div class="col-md-12">
+        <div class="row-fluid">            
+            <!--Copyright-->
+            <p class="margin-base-vertical text-center wor_copyright">
+                &copy; <a href="https://www.qxf2.com/?utm_source=sample-python-solid&utm_medium=click&utm_campaign=Sample%20python%20solid">Qxf2 Services</a> 2013 -
+                <script>document.write(new Date().getFullYear())</script>
+            </p>
+        </div>
+        <!--Copyright-->
+    </div>
+    <script>     
+        $("document").ready(function () {
+          $("#view").click(async function () {          
+                  var profile = $('#profile').val();                                 
+                  var callDetails = {
+                          type: 'POST',
+                          url: '/view',                        
+                          data: {'profile' : profile}
+                      };                      
+                      $.ajax(callDetails).done(function (view) {                                                                                          
+                          var arrayLength = view.answer.length;                        
+                          var list_element = document.querySelectorAll('#friends > li').length                          
+                          if (list_element > 0) {
+                            $("#friends").empty()
+                          }                        
+                          if (arrayLength > 0) {
+                            for (var i = 0; i < arrayLength; i++) {                            
+                              var friends_element = document.getElementById('friends');
+                              var element = document.createElement('li');
+                              friends_element.appendChild(element)
+                              var child_element = document.createElement('a');
+  
+                              child_element.text=view.answer[i]
+                              child_element.onclick = function(){document.getElementById('profile').value=this.text}
+                              element.appendChild(child_element);                                                                                    
+                          }};
+                          $("#fullName").text(view.name);
+                                                                  
+                      });
+                  })
+              })
+          </script>
+  
+    </body>
+  </html>
+  
