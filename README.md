@@ -30,4 +30,4 @@ To start the application,
 
 1. Run `python sample_python_solid.py` from the console.
 2. Visit `localhost:6464` in your browser. 
-3. Give the input and click on the 'View' button
+3. Give the webID as input and click on the 'View' button
